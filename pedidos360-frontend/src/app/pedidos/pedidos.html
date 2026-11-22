@@ -1,0 +1,80 @@
+<main class="pedidos-container">
+
+  <header class="pedidos-header">
+    <div class="marca">
+      <h1>Pedidos360</h1>
+      <p>GESTIÓN Y CONTROL DE PEDIDOS</p>
+    </div>
+
+    <div class="usuario">
+      <span>Bienvenido</span>
+      <strong>Usuario</strong>
+    </div>
+  </header>
+
+  <section class="pedidos-contenido">
+
+    <div class="titulo-seccion">
+      <h2>Pedidos</h2>
+      <p>Administra y consulta los pedidos disponibles.</p>
+    </div>
+
+   <div class="pedidos-toolbar">
+  <input type="text" placeholder="Buscar pedidos..." />
+
+  <select [(ngModel)]="estadoSeleccionado">
+    <option value="TODOS">Todos los estados</option>
+    <option value="PENDIENTE">Pendiente</option>
+    <option value="CONFIRMADO">Confirmado</option>
+    <option value="EN_PREPARACION">En preparación</option>
+    <option value="ENVIADO">Enviado</option>
+    <option value="ENTREGADO">Entregado</option>
+    <option value="CANCELADO">Cancelado</option>
+  </select>
+
+  <button type="button" (click)="aplicarFiltro()">
+    Filtrar
+  </button>
+</div>
+
+    <div class="pedidos-grid">
+
+      @for (pedido of pedidosFiltrados; track pedido.id) {
+      <article class="pedido-card">
+
+        <div class="pedido-card-header">
+          <h3>{{ pedido.numeroPedido }}</h3>
+          <span class="estado">
+            {{ pedido.estado }}
+          </span>
+        </div>
+
+        <div class="pedido-info">
+          <p><strong>Cliente ID:</strong> {{ pedido.clienteId }}</p>
+          <p><strong>Fecha:</strong> {{ pedido.fechaCreacion }}</p>
+          <p><strong>Total:</strong> ${{ pedido.total }}</p>
+        </div>
+
+        <div class="pedido-detalles">
+          <h4>Productos</h4>
+
+          @for (detalle of pedido.detalles; track detalle.id) {
+          <div class="detalle-producto">
+            <span>{{ detalle.nombreProducto }}</span>
+            <span>Cantidad: {{ detalle.cantidad }}</span>
+          </div>
+          }
+        </div>
+
+      </article>
+      } @empty {
+      <p class="sin-pedidos">
+        No hay pedidos disponibles.
+      </p>
+      }
+
+    </div>
+
+  </section>
+
+</main>
