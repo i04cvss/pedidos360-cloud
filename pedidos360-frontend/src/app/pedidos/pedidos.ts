@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +17,7 @@ export class PedidosComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:8080/api/pedidos')
+    this.http.get<any[]>('http://32.200.81.80:8080/api/pedidos')
       .subscribe({
         next: (response) => {
           this.pedidos = response;
