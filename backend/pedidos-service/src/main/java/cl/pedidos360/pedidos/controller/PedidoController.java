@@ -1,3 +1,4 @@
+
 package cl.pedidos360.pedidos.controller;
 
 import java.util.List;
@@ -13,15 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.pedidos360.pedidos.model.Pedido;
 import cl.pedidos360.pedidos.service.PedidoService;
+import cl.pedidos360.pedidos.service.PedidoProducer;
 
-@RestController 
+@RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
 
     private final PedidoService pedidoService;
+    private final PedidoProducer pedidoProducer;
 
-    public PedidoController(PedidoService pedidoService) {
+    public PedidoController(
+            PedidoService pedidoService,
+            PedidoProducer pedidoProducer) {
         this.pedidoService = pedidoService;
+        this.pedidoProducer = pedidoProducer;
     }
 
     @GetMapping
@@ -38,7 +44,11 @@ public class PedidoController {
 
     @PostMapping
     public Pedido crearPedido(@RequestBody Pedido pedido) {
-        return pedidoService.guardarPedido(pedido);
+        Pedido pedidoGuardado = pedidoService.guardarPedido(pedido);
+
+        pedidoProducer.enviarPedido(pedidoGuardado.toString());
+
+        return pedidoGuardado;
     }
 
     @DeleteMapping("/{id}")

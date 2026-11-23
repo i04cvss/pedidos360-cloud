@@ -13,9 +13,14 @@ import cl.pedidos360.usuarios_service.repository.UsuarioRepository;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioProducer usuarioProducer;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(
+            UsuarioRepository usuarioRepository,
+            UsuarioProducer usuarioProducer) {
+
         this.usuarioRepository = usuarioRepository;
+        this.usuarioProducer = usuarioProducer;
     }
 
     public List<Usuario> listarUsuarios() {
@@ -31,19 +36,27 @@ public class UsuarioService {
     }
 
     public Usuario guardarUsuario(Usuario usuario) {
+
         if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
             throw new IllegalArgumentException(
                     "Ya existe un usuario registrado con ese correo");
         }
 
-        return usuarioRepository.save(usuario);
+        Usuario usuarioGuardado = usuarioRepository.save(usuario);
+
+        // Publicar evento después de guardar el usuario
+        usuarioProducer.enviarUsuarioCreado(usuarioGuardado);
+
+        return usuarioGuardado;
     }
 
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
 
-    public Optional<Usuario> actualizarUsuario(Long id, Usuario datosActualizados) {
+    public Optional<Usuario> actualizarUsuario(
+            Long id,
+            Usuario datosActualizados) {
 
         return usuarioRepository.findById(id).map(usuario -> {
 
@@ -55,6 +68,4 @@ public class UsuarioService {
             return usuarioRepository.save(usuario);
         });
     }
-
-    
 }
