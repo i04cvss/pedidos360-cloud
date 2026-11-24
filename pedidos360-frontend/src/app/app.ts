@@ -60,7 +60,7 @@ export class App implements OnInit {
             console.log('AUDIENCIA:', payload.aud);
             console.log('ISSUER:', payload.iss);
 
-            this.http.get<any[]>('http://32.200.81.80:8080/api/pedidos').subscribe({
+            this.http.get<any[]>('http://localhost:8080/api/pedidos').subscribe({
               next: (response) => {
                 console.log('Pedidos recibidos desde el BFF:', response);
               },

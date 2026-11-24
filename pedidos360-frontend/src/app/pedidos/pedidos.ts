@@ -14,10 +14,13 @@ export class PedidosComponent implements OnInit {
 
   pedidos: any[] = [];
 
-  constructor(private http: HttpClient) { }
+  estadoSeleccionado: string = 'TODOS';
+  estadoFiltro: string = 'TODOS';
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>('http://32.200.81.80:8080/api/pedidos')
+    this.http.get<any[]>('http://localhost:8080/api/pedidos')
       .subscribe({
         next: (response) => {
           this.pedidos = response;
@@ -29,11 +32,11 @@ export class PedidosComponent implements OnInit {
       });
   }
 
-  estadoSeleccionado: string = 'TODOS';
-  estadoFiltro: string = 'TODOS';
-
   aplicarFiltro(): void {
-    this.estadoFiltro = this.estadoSeleccionado;
+    this.estadoFiltro = this.estadoSeleccionado.trim().toUpperCase();
+
+    console.log('Filtro aplicado:', this.estadoFiltro);
+    console.log('Resultado:', this.pedidosFiltrados);
   }
 
   get pedidosFiltrados(): any[] {
@@ -41,8 +44,8 @@ export class PedidosComponent implements OnInit {
       return this.pedidos;
     }
 
-    return this.pedidos.filter(
-      pedido => pedido.estado === this.estadoFiltro
+    return this.pedidos.filter(pedido =>
+      pedido.estado?.trim().toUpperCase() === this.estadoFiltro
     );
   }
 }

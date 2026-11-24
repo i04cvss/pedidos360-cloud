@@ -1,8 +1,5 @@
 
-/* ==============================
-   CONTENEDOR PRINCIPAL
-============================== */
-
+/* CONTENEDOR PRINCIPAL */
 .pedidos-container {
   min-height: 100vh;
   background-color: #F3EBDD;
@@ -10,10 +7,7 @@
   font-family: Georgia, serif;
 }
 
-/* ==============================
-   ENCABEZADO
-============================== */
-
+/* ENCABEZADO */
 .pedidos-header {
   display: flex;
   justify-content: space-between;
@@ -48,10 +42,7 @@
   color: #641D2C;
 }
 
-/* ==============================
-   CONTENIDO
-============================== */
-
+/* CONTENIDO */
 .pedidos-contenido {
   padding: 45px 6%;
 }
@@ -66,10 +57,7 @@
   margin-top: 0;
 }
 
-/* ==============================
-   BARRA DE HERRAMIENTAS
-============================== */
-
+/* BARRA DE HERRAMIENTAS */
 .pedidos-toolbar {
   display: flex;
   align-items: center;
@@ -110,10 +98,7 @@
   box-shadow: 0 0 0 2px rgba(100, 29, 44, 0.08);
 }
 
-/* ==============================
-   BOTÓN FILTRAR
-============================== */
-
+/* BOTÓN FILTRAR */
 .pedidos-toolbar button {
   padding: 14px 24px;
   border: 1px solid #641D2C;
@@ -140,20 +125,14 @@
   box-shadow: none;
 }
 
-/* ==============================
-   GRID DE PEDIDOS
-============================== */
-
+/* GRID DE PEDIDOS */
 .pedidos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
 
-/* ==============================
-   TARJETAS DE PEDIDOS
-============================== */
-
+/* TARJETAS */
 .pedido-card {
   background-color: #FAF6EE;
   border: 1px solid #D5D3D0;
@@ -184,10 +163,7 @@
   color: #641D2C;
 }
 
-/* ==============================
-   ESTADOS
-============================== */
-
+/* ESTADOS */
 .estado {
   background-color: #F3EBDD;
   color: #641D2C;
@@ -197,10 +173,7 @@
   font-weight: bold;
 }
 
-/* ==============================
-   INFORMACIÓN DEL PEDIDO
-============================== */
-
+/* INFORMACIÓN DEL PEDIDO */
 .pedido-info {
   margin: 18px 0;
 }
@@ -212,10 +185,7 @@
   overflow-wrap: anywhere;
 }
 
-/* ==============================
-   DETALLES DE PRODUCTOS
-============================== */
-
+/* DETALLES */
 .pedido-detalles {
   border-top: 1px solid #D5D3D0;
   padding-top: 12px;
@@ -243,20 +213,14 @@
   color: #641D2C;
 }
 
-/* ==============================
-   SIN PEDIDOS
-============================== */
-
+/* SIN PEDIDOS */
 .sin-pedidos {
   color: #76594D;
   text-align: center;
   padding: 30px;
 }
 
-/* ==============================
-   RESPONSIVE
-============================== */
-
+/* RESPONSIVE */
 @media (max-width: 600px) {
   .pedidos-header {
     padding: 20px 5%;
