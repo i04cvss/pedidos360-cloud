@@ -4,7 +4,9 @@ package cl.pedidos360.bff.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +23,12 @@ public class PedidosController {
     }
 
     @GetMapping
-    public List<Map<String, Object>> listarPedidos() {
-        return pedidoClientService.listarPedidos();
+    public List<Map<String, Object>> listarPedidos(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+
+        System.out.println("AUTH HEADER RECIBIDO: " +
+                (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")));
+
+        return pedidoClientService.listarPedidos(authorizationHeader);
     }
 }

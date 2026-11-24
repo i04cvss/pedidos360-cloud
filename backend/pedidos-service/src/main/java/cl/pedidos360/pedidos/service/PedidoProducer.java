@@ -1,8 +1,10 @@
+
 package cl.pedidos360.pedidos.service;
 
-import cl.pedidos360.pedidos.config.RabbitMQConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+
+import cl.pedidos360.pedidos.config.RabbitMQConfig;
 
 @Service
 public class PedidoProducer {
@@ -13,13 +15,13 @@ public class PedidoProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void enviarPedido(Object pedido) {
+    public void enviarPedido(Long pedidoId) {
         rabbitTemplate.convertAndSend(
                 RabbitMQConfig.PEDIDOS_EXCHANGE,
                 RabbitMQConfig.PEDIDOS_ROUTING_KEY,
-                pedido
+                pedidoId.toString()
         );
 
-        System.out.println("Mensaje de pedido enviado a RabbitMQ");
+        System.out.println("ID del pedido enviado a RabbitMQ: " + pedidoId);
     }
 }

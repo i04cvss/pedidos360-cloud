@@ -1,3 +1,4 @@
+
 package cl.pedidos360.bff.service;
 
 import java.util.List;
@@ -5,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -21,10 +23,12 @@ public class PedidoClientService {
                 .build();
     }
 
-    public List<Map<String, Object>> listarPedidos() {
+    public List<Map<String, Object>> listarPedidos(
+            String authorizationHeader) {
 
         return restClient.get()
                 .uri("/api/pedidos")
+                .header(HttpHeaders.AUTHORIZATION, authorizationHeader)
                 .retrieve()
                 .body(new ParameterizedTypeReference<
                         List<Map<String, Object>>>() {});

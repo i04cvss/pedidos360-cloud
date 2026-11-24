@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.pedidos360.pedidos.model.Pedido;
-import cl.pedidos360.pedidos.service.PedidoService;
 import cl.pedidos360.pedidos.service.PedidoProducer;
+import cl.pedidos360.pedidos.service.PedidoService;
 
 @RestController
 @RequestMapping("/api/pedidos")
@@ -46,7 +46,7 @@ public class PedidoController {
     public Pedido crearPedido(@RequestBody Pedido pedido) {
         Pedido pedidoGuardado = pedidoService.guardarPedido(pedido);
 
-        pedidoProducer.enviarPedido(pedidoGuardado.toString());
+        pedidoProducer.enviarPedido(pedidoGuardado.getId());
 
         return pedidoGuardado;
     }
