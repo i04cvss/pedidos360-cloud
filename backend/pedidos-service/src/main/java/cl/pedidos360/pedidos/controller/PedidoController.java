@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.pedidos360.pedidos.model.Pedido;
-import cl.pedidos360.pedidos.service.PedidoProducer;
 import cl.pedidos360.pedidos.service.PedidoService;
 
 @RestController
@@ -21,13 +20,9 @@ import cl.pedidos360.pedidos.service.PedidoService;
 public class PedidoController {
 
     private final PedidoService pedidoService;
-    private final PedidoProducer pedidoProducer;
 
-    public PedidoController(
-            PedidoService pedidoService,
-            PedidoProducer pedidoProducer) {
+    public PedidoController(PedidoService pedidoService) {
         this.pedidoService = pedidoService;
-        this.pedidoProducer = pedidoProducer;
     }
 
     @GetMapping
@@ -44,20 +39,18 @@ public class PedidoController {
 
     @PostMapping
     public Pedido crearPedido(@RequestBody Pedido pedido) {
-        Pedido pedidoGuardado = pedidoService.guardarPedido(pedido);
-
-        pedidoProducer.enviarPedido(pedidoGuardado.getId());
-
-        return pedidoGuardado;
+        return pedidoService.guardarPedido(pedido);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarPedido(@PathVariable Long id) {
+
         if (pedidoService.buscarPedidoPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         pedidoService.eliminarPedido(id);
+
         return ResponseEntity.noContent().build();
     }
 }

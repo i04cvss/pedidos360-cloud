@@ -15,12 +15,16 @@ public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
     private final PedidoProducer pedidoProducer;
+    private final PedidoKafkaProducer pedidoKafkaProducer;
 
     public PedidoService(
             PedidoRepository pedidoRepository,
-            PedidoProducer pedidoProducer) {
+            PedidoProducer pedidoProducer,
+            PedidoKafkaProducer pedidoKafkaProducer) {
+
         this.pedidoRepository = pedidoRepository;
         this.pedidoProducer = pedidoProducer;
+        this.pedidoKafkaProducer = pedidoKafkaProducer;
     }
 
     public List<Pedido> listarPedido() {
@@ -31,15 +35,18 @@ public class PedidoService {
         return pedidoRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
     public Optional<Pedido> buscarPedidoConDetalles(Long id) {
         return pedidoRepository.buscarPorIdConDetalles(id);
     }
 
     @Transactional
     public Pedido guardarPedido(Pedido pedido) {
+
         Pedido pedidoGuardado = pedidoRepository.save(pedido);
+
         pedidoProducer.enviarPedido(pedidoGuardado.getId());
+        pedidoKafkaProducer.enviarPedidoCreado(pedidoGuardado.getId());
+
         return pedidoGuardado;
     }
 
